@@ -1,0 +1,126 @@
+version: '3.8'
+
+services:
+  gateway:
+    build:
+      context: gateway/docker
+      dockerfile: development/nginx/Dockerfile
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    networks:
+      - symfony_network
+  # PHP + Symfony
+  api:
+    build:
+      context: api/docker
+      dockerfile: development/nginx/Dockerfile
+    container_name: symfony_api
+    restart: unless-stopped
+    volumes:
+      - ./api:/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - symfony_network
+
+  api-php-fpm:
+    build:
+      context: api/docker
+      dockerfile: development/php-fpm/Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - ./api:/app
+    networks:
+      - symfony_network
+
+  api-php-cli:
+    build:
+      context: api/docker
+      dockerfile: development/php-fpm/Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - ./api:/app
+    networks:
+      - symfony_network
+
+#  # Веб-сервер
+#  webserver:
+#    build:
+#      context: api/docker
+#      dockerfile: development/nginx/Dockerfile
+#    container_name: symfony_webserver
+#    restart: unless-stopped
+#    volumes:
+#      - ./api:/app
+#      - ./api/docker/nginx/conf.d:/etc/nginx/conf.d
+#    depends_on:
+#      - app
+#    networks:
+#      - symfony_network
+
+  # PostgreSQL
+  db:
+    build:
+      context: api/docker
+      dockerfile: development/db/Dockerfile
+    container_name: symfony_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - symfony_network
+
+  # PgAdmin 4
+  pgadmin:
+    image: dpage/pgadmin4:8.7
+    container_name: pg_admin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com  # Логин для входа
+      PGADMIN_DEFAULT_PASSWORD: 12345        # Пароль
+      PGADMIN_LISTEN_PORT: 83                  # Порт внутри контейнера
+    ports:
+      - "8083:83"  # Доступ на http://localhost:8083
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin  # Сохранение данных между перезапусками
+    depends_on:
+      - db
+    networks:
+      - symfony_network
+
+  keycloak:
+    image: bitnami/keycloak:26.2.5
+    container_name: symfony_keycloak
+    environment:
+      KEYCLOAK_DATABASE_HOST: db
+      KEYCLOAK_DATABASE_NAME: keycloak
+      KEYCLOAK_DATABASE_USER: postgres
+      KEYCLOAK_DATABASE_PASSWORD: 12345
+      KEYCLOAK_ADMIN_USER: admin
+      KEYCLOAK_ADMIN_PASSWORD: 12345
+      KEYCLOAK_MODE: development
+    ports:
+      - "8180:8080"
+    depends_on:
+      - db
+    networks:
+      - symfony_network
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+
+networks:
+  symfony_network:
+    driver: bridge
