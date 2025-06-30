@@ -23,9 +23,12 @@ services:
     build:
       context: frontend/docker/development/node
     container_name: symfony_frontend_node
+    environment:
+      WDS_SOCKET_PORT: 0
     volumes:
       - ./frontend:/app
 #    command: sh -c "until [ -f .ready ] ; do sleep 1 ; done && yarn start"
+    command: npm start
     tty: true
     networks:
       - symfony_network
