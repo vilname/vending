@@ -5,12 +5,40 @@ services:
     build:
       context: gateway/docker
       dockerfile: development/nginx/Dockerfile
+    container_name: symfony_gateway
     ports:
       - "8080:8080"
       - "8081:8081"
     networks:
       - symfony_network
-  # PHP + Symfony
+
+  frontend:
+    build:
+      context: frontend/docker/development/nginx
+    container_name: symfony_frontend
+    networks:
+      - symfony_network
+
+  frontend-node:
+    build:
+      context: frontend/docker/development/node
+    container_name: symfony_frontend_node
+    volumes:
+      - ./frontend:/app
+#    command: sh -c "until [ -f .ready ] ; do sleep 1 ; done && yarn start"
+    tty: true
+    networks:
+      - symfony_network
+
+  frontend-node-cli:
+    build:
+      context: frontend/docker/development/node
+    container_name: symfony_frontend_node_cli
+    volumes:
+      - ./frontend:/app
+    networks:
+      - symfony_network
+
   api:
     build:
       context: api/docker
@@ -30,6 +58,7 @@ services:
     build:
       context: api/docker
       dockerfile: development/php-fpm/Dockerfile
+    container_name: symfony_api_php_fpm
     env_file:
       - .env
     volumes:
@@ -41,6 +70,7 @@ services:
     build:
       context: api/docker
       dockerfile: development/php-fpm/Dockerfile
+    container_name: symfony_api_php_cli
     env_file:
       - .env
     volumes:

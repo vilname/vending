@@ -3,3 +3,4 @@
 api/.env
 api/var
 api/vendor
+frontend/node_modules
