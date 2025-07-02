@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Module\Visit\Repository\VisitRepository;
+use App\Visit\Repository\VisitRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: VisitRepository::class)]
 class Visit

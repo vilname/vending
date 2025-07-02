@@ -1,5 +1,5 @@
 visit_module:
     resource:
-        path: ../src/Module/Visit/Controller/
-        namespace: App\Module\Visit\Controller
+        path: ../src/Visit/Controller/
+        namespace: App\Visit\Controller
     type: attribute

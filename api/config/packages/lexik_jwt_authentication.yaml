@@ -1,0 +1,27 @@
+lexik_jwt_authentication:
+    # Настройки кодировщика
+    encoder:
+        service: lexik_jwt_authentication.encoder.lcobucci
+        signature_algorithm: RS256
+
+    # Настройки верификации
+    access_token_verification:
+        signature:
+            keyset: '%env(KEYCLOAK_JWKS_URL)%'
+            mandatory_claims: [ 'iss', 'aud', 'exp', 'iat' ]
+            allowed_algorithms: [ 'RS256' ]
+
+    # Настройки извлечения токена
+    token_extractors:
+        authorization_header:
+            enabled: true
+            prefix: Bearer
+            name: Authorization
+
+    # Дополнительные настройки
+#    additional_public_keys:
+#        - '%env(KEYCLOAK_JWKS_URL)%'
+    public_key: '%env(resolve:KEYCLOAK_PUBLIC_KEY)%'
+    secret_key: '%env(resolve:KEYCLOAK_CLIENT_SECRET)%'
+    clock_skew: 30
+    user_id_claim: sub

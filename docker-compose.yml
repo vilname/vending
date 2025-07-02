@@ -73,7 +73,7 @@ services:
   api-php-cli:
     build:
       context: api/docker
-      dockerfile: development/php-fpm/Dockerfile
+      dockerfile: development/php-cli/Dockerfile
     container_name: symfony_api_php_cli
     env_file:
       - .env
@@ -141,8 +141,8 @@ services:
       KEYCLOAK_DATABASE_NAME: keycloak
       KEYCLOAK_DATABASE_USER: postgres
       KEYCLOAK_DATABASE_PASSWORD: 12345
-      KEYCLOAK_ADMIN_USER: admin
-      KEYCLOAK_ADMIN_PASSWORD: 12345
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: 12345
       KEYCLOAK_MODE: development
     ports:
       - "8180:8080"

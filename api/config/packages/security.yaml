@@ -1,0 +1,14 @@
+security:
+    providers:
+        jwt_provider:
+            lexik_jwt:
+                class: App\Security\User\JwtUser
+
+    firewalls:
+        api:
+            pattern: ^/
+            stateless: true
+            jwt: ~
+
+    access_control:
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }

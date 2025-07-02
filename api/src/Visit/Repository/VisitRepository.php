@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Module\Visit\Repository;
+namespace App\Visit\Repository;
 
 use App\Entity\Visit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
