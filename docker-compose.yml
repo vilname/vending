@@ -72,8 +72,8 @@ services:
 
   api-php-cli:
     build:
-      context: api/docker
-      dockerfile: development/php-cli/Dockerfile
+      context: api
+      dockerfile: docker/development/php-cli/Dockerfile
     container_name: symfony_api_php_cli
     env_file:
       - .env
