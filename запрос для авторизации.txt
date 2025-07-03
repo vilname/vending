@@ -1,0 +1,24 @@
+Эту ссылку нужно вставить в браузер после настройки keycloak
+
+curl --request GET \
+  --url 'http://localhost:8180/realms/test-realm/protocol/openid-connect/auth?response_type=code&client_id=test-client&redirect_uri=http://localhost:9090&code_challenge_method=S256&code_challenge=QOGrLi-r1LGSbct-jfm72mq_1H_9k3WAd5xI34_g2J4' \
+  --header 'Accept: */*' \
+  --header 'Accept-Encoding: gzip, deflate, br' \
+  --header 'Connection: keep-alive' \
+  --header 'Cookie: AUTH_SESSION_ID=NjRjNDNlYjQtZjVjNi00MTVkLThlZGMtMDhiNjhkZmI3OGU3LmkyYVhPM0tvRjhjMGV1R19nMHI0bjJNR3NRa3VFbGtGajNrOUYySi1sQ05tU1I4T0ZoT1ktUm80V2dZRW9aeHU2UGNSVFZfV0FpbkFoSTR2c0plN1ZR.fb3b56ba5c11-59470;KC_RESTART=eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..3THAFY9Qetf6L6Zghf0QKQ.ZQBcnf7wxnx4HnPJmiwx6r1d5bIvk1i8tUJICZksCF54EpAi0FE8a0hUi19Ufwchh4MyyW6k_HZ4_PvoZ2vpke48hgLvllKKRKd2EJbTicgFURgAS_gnYK6dKgHFg5YboIlLXGJtrEfHA_3ML3gHbdyUHv2fA4IiizeXny53VVCZOt2cg6Tu5RgbdY2I_wV_8TgbaiIomrcWL16RjaxN0tH1mCXiaC2LQO5DxgjqW4sETRAE81zga4g7g7nzg5Eu5h_2KSUtyVajufyHXUMbHP_oNz3-7Q8LP-ri881KWClnUJrkZpllz16tRVabg4jXvl7rhtz6_WxJtWz5gstLiSCvKxn_gFcZ07SW1EfwMi36kQhVsnDWVeS218Z2bM3kmSq5FnlY8PmiNyE1aaVyOsPukV62Vcs8PuJurjXIj51P4WhR_79rE7TJtMUmRJgTiFhqvPu5aaboMFguhRGYJRN1gpT5tN4iKfqg5DsLBTW2-zsE5fhRXrG5ArXKnYSHqcdhbWKgXtbpjGc5e8ZzPHP9gkKIwidufMRoW-dqDy-iRyGr46uY5sjReGajkja1OxLK2mWu44bMdkeNKih3WQP0ENeZW8SLae5K4cC4UoNajq6W5iMC4c2dtqzlAtjeQgI0mR3rcvXr3kRVwZLK-VqPCSYU2M0gxnKUGdV3pyfXV3YjaHYG6OzmHLCXf75-gguW1JPxK38nnEAJq_MmGxam3qlFZmEtVEyu_6Pj2u3AIqyG12EJYCXLd7aVJtPhaSNCY2CkKqOCPL3WGIeBCYqmDFUZ8wm4orESONnQvxs.JaN8Oj-4HVA--Dtl-o7xGA' \
+  --header 'User-Agent: EchoapiRuntime/1.1.0'
+
+У предыдущего запроса, после ввода Логина и пароля нужно скопировать get параметр - code и вставить тело следующего запроса
+curl --request POST \
+  --url http://localhost:8180/realms/test-realm/protocol/openid-connect/token \
+  --header 'Accept: */*' \
+  --header 'Accept-Encoding: gzip, deflate, br' \
+  --header 'Connection: keep-alive' \
+  --header 'Content-Type: application/x-www-form-urlencoded' \
+  --header 'Cookie: AUTH_SESSION_ID=NjRjNDNlYjQtZjVjNi00MTVkLThlZGMtMDhiNjhkZmI3OGU3LmkyYVhPM0tvRjhjMGV1R19nMHI0bjJNR3NRa3VFbGtGajNrOUYySi1sQ05tU1I4T0ZoT1ktUm80V2dZRW9aeHU2UGNSVFZfV0FpbkFoSTR2c0plN1ZR.fb3b56ba5c11-59470;KC_RESTART=eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..3THAFY9Qetf6L6Zghf0QKQ.ZQBcnf7wxnx4HnPJmiwx6r1d5bIvk1i8tUJICZksCF54EpAi0FE8a0hUi19Ufwchh4MyyW6k_HZ4_PvoZ2vpke48hgLvllKKRKd2EJbTicgFURgAS_gnYK6dKgHFg5YboIlLXGJtrEfHA_3ML3gHbdyUHv2fA4IiizeXny53VVCZOt2cg6Tu5RgbdY2I_wV_8TgbaiIomrcWL16RjaxN0tH1mCXiaC2LQO5DxgjqW4sETRAE81zga4g7g7nzg5Eu5h_2KSUtyVajufyHXUMbHP_oNz3-7Q8LP-ri881KWClnUJrkZpllz16tRVabg4jXvl7rhtz6_WxJtWz5gstLiSCvKxn_gFcZ07SW1EfwMi36kQhVsnDWVeS218Z2bM3kmSq5FnlY8PmiNyE1aaVyOsPukV62Vcs8PuJurjXIj51P4WhR_79rE7TJtMUmRJgTiFhqvPu5aaboMFguhRGYJRN1gpT5tN4iKfqg5DsLBTW2-zsE5fhRXrG5ArXKnYSHqcdhbWKgXtbpjGc5e8ZzPHP9gkKIwidufMRoW-dqDy-iRyGr46uY5sjReGajkja1OxLK2mWu44bMdkeNKih3WQP0ENeZW8SLae5K4cC4UoNajq6W5iMC4c2dtqzlAtjeQgI0mR3rcvXr3kRVwZLK-VqPCSYU2M0gxnKUGdV3pyfXV3YjaHYG6OzmHLCXf75-gguW1JPxK38nnEAJq_MmGxam3qlFZmEtVEyu_6Pj2u3AIqyG12EJYCXLd7aVJtPhaSNCY2CkKqOCPL3WGIeBCYqmDFUZ8wm4orESONnQvxs.JaN8Oj-4HVA--Dtl-o7xGA' \
+  --header 'User-Agent: EchoapiRuntime/1.1.0' \
+  --data client_id=test-client \
+  --data grant_type=authorization_code \
+  --data code=7069482c-0111-48a4-9430-ecf6f596b4bb.ea8ce46b-f031-4fed-b725-e829f5d064d9.21e9d02a-6322-4710-9241-2b40df2df496 \
+  --data redirect_uri=http://localhost:9090 \
+  --data code_verifier=lt_7Ah4Vo-Pm_Ry-Qft-i0knDV2Op_Gc2tATPmgGEOE
