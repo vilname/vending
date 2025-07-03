@@ -40,6 +40,12 @@ class Product
     {
         $this->payments = new ArrayCollection();
     }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     public function getName(): string
     {
         return $this->name;
@@ -98,5 +104,10 @@ class Product
     public function setUpdated(): void
     {
         $this->updated = new \DateTimeImmutable();
+    }
+
+    public function __toString(): string
+    {
+        return $this->getName() . $this->getId();
     }
 }

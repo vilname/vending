@@ -1,5 +1,11 @@
-visit_module:
+product_module:
     resource:
         path: ../src/Product/Controller/
         namespace: App\Product\Controller
+    type: attribute
+
+payment_module:
+    resource:
+        path: ../src/Payment/Controller/
+        namespace: App\Payment\Controller
     type: attribute

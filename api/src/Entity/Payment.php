@@ -8,6 +8,7 @@ use App\Payment\Repository\PaymentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PaymentRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Payment
 {
     #[ORM\Id]
@@ -56,5 +57,11 @@ class Payment
     public function setSum(float $sum): void
     {
         $this->sum = $sum;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreated(): void
+    {
+        $this->created = new \DateTimeImmutable();
     }
 }
