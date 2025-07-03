@@ -1,1 +1,9 @@
-1. docker-compose run --rm api-php-cli composer 
+# Порядок установки
+1. создать файлы .evn и /api/.env из файлов .env.dev 
+2. запустить docker-compose up -d
+
+Авторизацию происходит по oauth2.0
+сервер авторизации - keycloak
+Нужно его настройка
+   1. по адресу http://localhost:8180 (логин/пароль admin/12345) 
+нужно создать realm, client и пользователя
