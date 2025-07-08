@@ -1,2 +1,2 @@
-create database tour;
+create database vending;
 create database keycloak;
